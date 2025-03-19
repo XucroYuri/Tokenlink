@@ -1,0 +1,23 @@
+{
+    "name": "tokenlink-frontend",
+    "version": "1.0.0",
+    "description": "Frontend for token-based semantic association mining tool",
+    "scripts": {
+      "start": "http-server -c-1 .",
+      "build": "tailwindcss -i ./style.css -o ./dist/style.css --minify",
+      "test": "jest"
+    },
+    "dependencies": {
+      "tailwindcss": "^3.0.0",
+      "chart.js": "^3.0.0",
+      "d3": "^7.0.0",
+      "d3-cloud": "^1.2.5",
+      "lucide": "^latest"
+    },
+    "devDependencies": {
+      "http-server": "^14.1.1",
+      "jest": "^27.0.0",
+      "jsdom": "^16.6.0"
+    }
+  }
+  
