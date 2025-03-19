@@ -29,7 +29,7 @@ Tokenlink is a tool for performing semantic association mining on text data. It 
 
     ```
     bash
-    git clone [repository_url]
+    git clone https://github.com/XucroYuri/Tokenlink.git
     cd Tokenlink
     ```
 
