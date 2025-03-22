@@ -73,13 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = document.getElementById('word-frequency-chart').getContext('2d');
         window.wordFrequencyChart = new Chart(ctx, {
             type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Word Frequency',
-                    data: counts,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+            162, 235, 1)',
                     borderWidth: 1
                 }]
             },
@@ -91,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    }
 
     function renderWordCloud(wordFrequency) {
         // Clear existing word cloud
