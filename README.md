@@ -4,6 +4,29 @@
 
 Tokenlink is a tool for performing semantic association mining on text data. It allows users to input text, specify focus terms, and analyze the relationships between these terms within the text. The tool provides visualizations such as word frequency charts and word clouds to help users understand the semantic structure of the text.
 
+```
+Tokenlink/
+├── backend/                  # 后端代码
+│   ├── server.js            # Node.js 服务器
+│   ├── analysis.js          # 语义分析逻辑
+│   ├── utils.js             # 实用工具函数
+│   ├── package.json         # 后端依赖
+│   ├── Dockerfile           # 后端 Dockerfile
+│   └── analysis.test.js     # 后端单元测试
+├── frontend/                 # 前端代码
+│   ├── index.html           # HTML 页面
+│   ├── app.js               # 前端 JavaScript
+│   ├── style.css            # 样式文件
+│   ├── visualization.js     # 可视化代码
+│   ├── package.json         # 前端依赖
+│   ├── Dockerfile           # 前端 Dockerfile
+│   └── app.test.js          # 前端单元测试
+├── nginx.conf                # Nginx 配置文件
+├── docker-compose.yml        # Docker Compose 文件
+├── deploy.sh                 # 部署脚本
+└── README.md                 # 项目说明
+```
+
 ## Features
 
 -   **Text Input**: Accepts text input for analysis.
