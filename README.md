@@ -6,25 +6,25 @@ Tokenlink is a tool for performing semantic association mining on text data. It 
 
 ```
 Tokenlink/
-├── backend/                  # 后端代码
-│   ├── server.js            # Node.js 服务器
-│   ├── analysis.js          # 语义分析逻辑
-│   ├── utils.js             # 实用工具函数
-│   ├── package.json         # 后端依赖
-│   ├── Dockerfile           # 后端 Dockerfile
-│   └── analysis.test.js     # 后端单元测试
-├── frontend/                 # 前端代码
-│   ├── index.html           # HTML 页面
-│   ├── app.js               # 前端 JavaScript
-│   ├── style.css            # 样式文件
-│   ├── visualization.js     # 可视化代码
-│   ├── package.json         # 前端依赖
-│   ├── Dockerfile           # 前端 Dockerfile
-│   └── app.test.js          # 前端单元测试
-├── nginx.conf                # Nginx 配置文件
+├── backend/                  # Backend code
+│   ├── server.js            # Node.js server
+│   ├── analysis.js          # Semantic analysis logic
+│   ├── utils.js             # Utility functions
+│   ├── package.json         # Backend dependencies
+│   ├── Dockerfile           # Backend Dockerfile
+│   └── analysis.test.js     # Backend unit tests
+├── frontend/                 # Frontend code
+│   ├── index.html           # home page
+│   ├── app.js               # Frontend JavaScript
+│   ├── style.css            # Stylesheet
+│   ├── visualization.js     # Visualization code
+│   ├── package.json         # Frontend dependencies
+│   ├── Dockerfile           # Frontend Dockerfile
+│   └── app.test.js          # Frontend unit tests
+├── nginx.conf                # Nginx configuration file
 ├── docker-compose.yml        # Docker Compose 文件
-├── deploy.sh                 # 部署脚本
-└── README.md                 # 项目说明
+├── deploy.sh                 # Deployment script
+└── README.md                 # Project documentation
 ```
 
 ## Features
