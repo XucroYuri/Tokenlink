@@ -121,13 +121,18 @@ Tokenlink/
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
+This is an initial release, and we encourage you to:
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix.
-3.  Make your changes.
-4.  Submit a pull request.
+- Suggest improvements via GitHub Issues.
+- Submit code changes via Pull Requests.
+- Fork the repository and develop new branches with better features.
+
+See CONTRIBUTING.md for details on how to contribute.
+
 
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+## Contact
+For questions, reach out via GitHub Issues.
