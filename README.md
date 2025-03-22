@@ -22,7 +22,7 @@ Tokenlink/
 │   ├── Dockerfile           # Frontend Dockerfile
 │   └── app.test.js          # Frontend unit tests
 ├── nginx.conf                # Nginx configuration file
-├── docker-compose.yml        # Docker Compose 文件
+├── docker-compose.yml        # Docker Compose file
 ├── deploy.sh                 # Deployment script
 └── README.md                 # Project documentation
 ```
