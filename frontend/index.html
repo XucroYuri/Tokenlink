@@ -15,53 +15,74 @@
     <div class="container mx-auto p-8">
         <h1 class="text-2xl font-bold mb-4">Tokenlink: Semantic Association Mining Tool</h1>
 
-        <div class="mb-4">
-            <label for="textInput" class="block text-gray-700 text-sm font-bold mb-2">Enter Text:</label>
-            <textarea id="textInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" placeholder="Enter your text here"></textarea>
-        </div>
-
-        <div class="mb-4">
-            <label for="focusTermsInput" class="block text-gray-700 text-sm font-bold mb-2">Focus Terms (comma separated):</label>
-            <input type="text" id="focusTermsInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter focus terms">
-        </div>
-
-        <div class="mb-4">
-            <label for="ngramSizeInput" class="block text-gray-700 text-sm font-bold mb-2">N-gram Size:</label>
-            <input type="number" id="ngramSizeInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="1">
-        </div>
-
-        <div class="mb-4">
-            <label for="customStopWordsInput" class="block text-gray-700 text-sm font-bold mb-2">Custom Stop Words (comma separated):</label>
-            <input type="text" id="customStopWordsInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter custom stop words">
-        </div>
-
-        <div class="mb-4">
-            <label for="windowSizeInput" class="block text-gray-700 text-sm font-bold mb-2">Window Size:</label>
-            <input type="number" id="windowSizeInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="5">
-        </div>
-
-        <div class="mb-4">
-            <label for="minFrequencyInput" class="block text-gray-700 text-sm font-bold mb-2">Minimum Frequency:</label>
-            <input type="number" id="minFrequencyInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="2">
-        </div>
-        
-        <div class="mb-4">
-            <button id="analyzeButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Analyze Text</button>
-        </div>
-
-        <div id="results" class="mt-8">
-            <h2 class="text-xl font-bold mb-2">Analysis Results</h2>
-            <p>Token Count: <span id="token-count">0</span></p>
-            <div id="word-frequency-chart-container">
-                <canvas id="word-frequency-chart"></canvas>
+        <form id="analysisForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="textInput" class="block text-gray-700 text-sm font-bold mb-2">输入文本:</label>
+                <textarea id="textInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4" placeholder="在此输入您要分析的文本"></textarea>
             </div>
-            <div id="word-cloud-container"></div>
+
+            <div class="mb-4">
+                <label for="focusTermsInput" class="block text-gray-700 text-sm font-bold mb-2">焦点词 (逗号分隔):</label>
+                <input id="focusTermsInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="例如: 科技, 创新, 发展">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="mb-4">
+                    <label for="ngramSize" class="block text-gray-700 text-sm font-bold mb-2">N-gram 大小:</label>
+                    <input id="ngramSize" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" min="1" max="5" value="1">
+                </div>
+
+                <div class="mb-4">
+                    <label for="windowSize" class="block text-gray-700 text-sm font-bold mb-2">窗口大小:</label>
+                    <input id="windowSize" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" min="1" max="10" value="3">
+                </div>
+
+                <div class="mb-4">
+                    <label for="minFrequency" class="block text-gray-700 text-sm font-bold mb-2">最小频率:</label>
+                    <input id="minFrequency" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" min="1" value="1">
+                </div>
+
+                <div class="mb-4">
+                    <label for="customStopWords" class="block text-gray-700 text-sm font-bold mb-2">自定义停用词 (逗号分隔):</label>
+                    <input id="customStopWords" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="例如: 的, 了, 和">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
+                    <i data-lucide="search" class="w-4 h-4 mr-2"></i>
+                    分析文本
+                </button>
+            </div>
+        </form>
+
+        <div id="resultsSection" class="hidden">
+            <h2 class="text-xl font-bold mb-4">分析结果</h2>
+
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Token 数量</h3>
+                    <p id="tokenCount" class="text-2xl font-bold text-blue-500">0</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">词频分析</h3>
+                    <div id="wordFrequencyChart" class="h-64"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">词云</h3>
+                    <div id="wordCloud" class="h-96 border rounded"></div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">语义关联</h3>
+                    <div id="associationsContainer"></div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
-    <script>
-      lucide.createIcons();
-    </script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

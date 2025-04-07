@@ -7,6 +7,16 @@ function tokenize(text) {
   return cleanedText.split(/\s+/).filter(Boolean); // 确保没有空字符串
 }
 
+function generateNgrams(tokens, n) {
+  if (n <= 1) return tokens;
+  
+  const ngrams = [];
+  for (let i = 0; i <= tokens.length - n; i++) {
+    ngrams.push(tokens.slice(i, i + n).join(' '));
+  }
+  return ngrams;
+}
+
 function removeStopWords(tokens, stopWords) {
   return tokens.filter(token => !stopWords.includes(token));
 }
@@ -60,6 +70,7 @@ function calculateAssociations(tokens, focusTerms, windowSize) {
 
 module.exports = {
   tokenize,
+  generateNgrams,
   removeStopWords,
   calculateWordFrequency,
   calculateAssociations

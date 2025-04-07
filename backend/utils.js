@@ -18,6 +18,7 @@ function detectLanguage(text) {
     }
 }
 
+// 导出所有函数
 module.exports = {
     splitTextIntoSentences,
     detectLanguage

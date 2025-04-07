@@ -12,7 +12,7 @@
     "chart.js": "^3.0.0",
     "d3": "^7.0.0",
     "d3-cloud": "^1.2.5",
-    "lucide": "^latest"
+    "lucide": "0.263.0"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

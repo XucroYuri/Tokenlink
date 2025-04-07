@@ -1,128 +1,170 @@
+// 导入可视化函数和设置组件
+import { renderWordFrequencyChart, renderWordCloud } from './visualization.js';
+import Settings from './Settings.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    const analyzeButton = document.getElementById('analyzeButton');
-    const textInput = document.getElementById('textInput');
-    const focusTermsInput = document.getElementById('focusTermsInput');
-    const ngramSizeInput = document.getElementById('ngramSizeInput');
-    const customStopWordsInput = document.getElementById('customStopWordsInput');
-    const windowSizeInput = document.getElementById('windowSizeInput');
-    const minFrequencyInput = document.getElementById('minFrequencyInput');
-    const tokenCountElement = document.getElementById('token-count');
-    const wordFrequencyChartContainer = document.getElementById('word-frequency-chart-container');
-    const wordCloudContainer = document.getElementById('word-cloud-container');
-
-    analyzeButton.addEventListener('click', async () => {
-        const text = textInput.value;
-        const terms = focusTermsInput.value.split(',').map(term => term.trim()).filter(term => term !== '');
-        const ngram = parseInt(ngramSizeInput.value);
-        const customStopWords = customStopWordsInput.value.split(',').map(word => word.trim()).filter(word => word !== '');
-        const window = parseInt(windowSizeInput.value);
-        const minFreq = parseInt(minFrequencyInput.value);
-
-        const data = await fetchData(text, terms, ngram, customStopWords, window, minFreq);
-        updateUI(data);
-    });
-
-    async function fetchData(text, terms, ngram, customStopWords, window, minFreq) {
-        const language = 'auto'; // 自动检测语言
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+    
+    // 初始化设置组件
+    const settings = new Settings();
+    
+    // 获取表单元素
+    const form = document.getElementById('analysisForm');
+    const resultsSection = document.getElementById('resultsSection');
+    
+    // 添加表单提交事件监听器
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // 显示加载状态
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.innerHTML = '<span class="animate-spin mr-2">↻</span> 分析中...';
+        submitButton.disabled = true;
+        
         try {
-            const response = await fetch('/api/analyze', {   // 注意这里修改了API地址
+            // 获取表单数据
+            const textInput = document.getElementById('textInput').value;
+            const focusTermsInput = document.getElementById('focusTermsInput').value;
+            const ngramSizeInput = document.getElementById('ngramSize').value;
+            const customStopWordsInput = document.getElementById('customStopWords').value;
+            const windowSizeInput = document.getElementById('windowSize').value;
+            const minFrequencyInput = document.getElementById('minFrequency').value;
+            
+            // 处理焦点词
+            const focusTerms = focusTermsInput.split(',').map(term => term.trim().toLowerCase());
+            
+            // 处理自定义停用词
+            const customStopWords = customStopWordsInput ? customStopWordsInput.split(',').map(word => word.trim().toLowerCase()) : [];
+            
+            // 准备请求数据
+            const requestData = {
+                text: textInput,
+                focusTerms: focusTerms,
+                ngramSize: parseInt(ngramSizeInput),
+                customStopWords: customStopWords,
+                windowSize: parseInt(windowSizeInput),
+                minFrequency: parseInt(minFrequencyInput)
+            };
+            
+            // 发送分析请求
+            const response = await fetch('/api/analysis/analyze', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    text: text,
-                    language: language,
-                    focusTerms: terms,
-                    ngramSize: ngram,
-                    customStopWords: customStopWords,
-                    windowSize: window,
-                    minFrequency: minFreq
-                })
+                body: JSON.stringify(requestData)
             });
+            
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error('分析请求失败');
             }
-            return await response.json();
+            
+            const data = await response.json();
+            
+            // 显示结果
+            displayResults(data);
+            
+            // 显示结果部分
+            resultsSection.classList.remove('hidden');
+            
+            // 滚动到结果部分
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
         } catch (error) {
-            console.error("Failed to fetch data:", error);
-            return null;
+            console.error('分析过程中出错:', error);
+            alert('分析过程中出错: ' + error.message);
+        } finally {
+            // 恢复按钮状态
+            submitButton.innerHTML = originalButtonText;
+            submitButton.disabled = false;
         }
-    }
-
-    function updateUI(data) {
-        if (!data) {
-            tokenCountElement.textContent = 'Error occurred';
-            return;
-        }
-
-        tokenCountElement.textContent = data.tokenCount;
+    });
+    
+    // 显示分析结果
+    function displayResults(data) {
+        // 显示 Token 数量
+        document.getElementById('tokenCount').textContent = data.tokenCount;
+        
+        // 渲染词频图表
         renderWordFrequencyChart(data.wordFrequency);
+        
+        // 渲染词云
         renderWordCloud(data.wordFrequency);
+        
+        // 显示语义关联
+        displayAssociations(data.associations);
     }
-
-    function renderWordFrequencyChart(wordFrequency) {
-        // Destroy existing chart
-        if (window.wordFrequencyChart) {
-            window.wordFrequencyChart.destroy();
-        }
-
-        const labels = wordFrequency.map(item => item.text);
-        const counts = wordFrequency.map(item => item.count);
-
-        const ctx = document.getElementById('word-frequency-chart').getContext('2d');
-        window.wordFrequencyChart = new Chart(ctx, {
-            type: 'bar',
-            162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+    
+    // 显示语义关联
+    function displayAssociations(associations) {
+        const associationsContainer = document.getElementById('associationsContainer');
+        associationsContainer.innerHTML = '';
+        
+        associations.forEach(item => {
+            const termDiv = document.createElement('div');
+            termDiv.className = 'mb-4 p-4 bg-white rounded shadow';
+            
+            const termTitle = document.createElement('h3');
+            termTitle.className = 'text-lg font-bold mb-2';
+            termTitle.textContent = `关联词: ${item.term}`;
+            termDiv.appendChild(termTitle);
+            
+            const associationsList = document.createElement('ul');
+            associationsList.className = 'list-disc pl-5';
+            
+            item.associations.forEach(assoc => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${assoc.text} (得分: ${assoc.score})`;
+                associationsList.appendChild(listItem);
+            });
+            
+            termDiv.appendChild(associationsList);
+            associationsContainer.appendChild(termDiv);
         });
     }
-
-    function renderWordCloud(wordFrequency) {
-        // Clear existing word cloud
-        wordCloudContainer.innerHTML = '';
-
-        const width = 500;
-        const height = 300;
-
-        const svg = d3.select(wordCloudContainer)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g")
-            .attr("transform", `translate(${width / 2},${height / 2})`);
-
-        const fontScale = d3.scaleLinear()
-            .domain([0, d3.max(wordFrequency, d => d.count)])
-            .range([10, 50]);
-
-        d3.cloud()
-            .size([width, height])
-            .words(wordFrequency, d => d.text)
-            .padding(5)
-            .rotate(() => ~~(Math.random() * 2) * 90)
-            .font("Impact")
-            .fontSize(d => fontScale(d.count))
-            .on("end", words => {
-                svg.selectAll("text")
-                    .data(words)
-                    .enter().append("text")
-                    .style("font-size", d => `${d.size}px`)
-                    .style("font-family", "Impact")
-                    .style("fill", (d, i) => d3.schemeCategory10[i % 10])
-                    .attr("text-anchor", "middle")
-                    .attr("transform", d => `translate(${d.x},${d.y})rotate(${d.rotate})`)
-                    .text(d => d.text);
-            })
-            .start();
-    }
 });
+
+// 添加全局错误处理函数
+function handleApiError(error, message) {
+  console.error(message, error);
+  
+  // 显示错误消息给用户
+  const errorContainer = document.getElementById('error-container');
+  if (errorContainer) {
+    errorContainer.textContent = `${message}: ${error.message || '未知错误'}`;
+    errorContainer.style.display = 'block';
+    
+    // 5秒后自动隐藏
+    setTimeout(() => {
+      errorContainer.style.display = 'none';
+    }, 5000);
+  }
+}
+
+// 修改API调用函数，添加错误处理
+async function analyzeText(text, focusTerms, options = {}) {
+  try {
+    const response = await fetch('/api/analysis/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text,
+        focusTerms,
+        ...options
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `服务器返回错误: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    handleApiError(error, '文本分析失败');
+    throw error;
+  }
+}
