@@ -1,6 +1,9 @@
 # Tokenlink
 ## A Token-Based Semantic Association Mining Tool | 基于词元的语义关联挖掘工具
-![image](https://github.com/user-attachments/assets/19e50f67-ef22-4880-b792-5832234672a5)
+![image](https://github.com/XucroYuri/Tokenlink/blob/main/frontend/logo.svg?raw=true)
+
+**开发者**: XucroYuri  
+**项目地址**: https://github.com/XucroYuri/Tokenlink
 
 ## Overview | 概述
 

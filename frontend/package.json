@@ -12,7 +12,9 @@
     "chart.js": "^3.0.0",
     "d3": "^7.0.0",
     "d3-cloud": "^1.2.5",
-    "lucide": "0.263.0"
+    "lucide": "0.263.0",
+    "react-markdown": "^8.0.7",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

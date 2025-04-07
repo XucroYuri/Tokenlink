@@ -21,6 +21,12 @@ export default class Settings {
     init() {
         // 创建设置按钮
         this.createSettingsButton();
+
+        // 新增演示功能按钮
+        this.createDemoButton();
+
+        // 新增帮助按钮
+        this.createHelpButton();
         
         // 创建设置菜单
         this.createSettingsMenu();
@@ -36,7 +42,7 @@ export default class Settings {
     createSettingsButton() {
         // 创建设置按钮容器
         const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'fixed top-4 right-4';
+        buttonContainer.className = 'fixed top-4 right-4 flex gap-2';
         
         // 创建设置按钮
         const settingsButton = document.createElement('button');

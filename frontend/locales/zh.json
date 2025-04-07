@@ -1,0 +1,9 @@
+{
+  "appTitle": "TokenLink语义分析系统",
+  "analyzeButton": "分析文本",
+  "demoButton": "加载演示",
+  "clearButton": "清空",
+  "helpTitle": "使用指南",
+  "languageSwitch": "English",
+  "footerText": "开源项目 - MIT协议 | GitHub: https://github.com/XucroYuri/Tokenlink"
+}
